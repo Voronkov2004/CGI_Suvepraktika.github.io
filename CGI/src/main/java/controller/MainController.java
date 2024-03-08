@@ -17,4 +17,14 @@ public class MainController {
     public String aboutPage(Model model) {
         return "about";
     }
+
+    @GetMapping("/pricing")
+    public String pricingPage(Model model) {
+        return "price";
+    }
+
+    @GetMapping("/login")
+    public String logInPage(Model model) {
+        return "login";
+    }
 }
