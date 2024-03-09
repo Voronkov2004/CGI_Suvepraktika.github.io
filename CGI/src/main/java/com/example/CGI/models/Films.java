@@ -10,7 +10,7 @@ public class Films {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String title, rating, full_text;
+    private String title, rating, full_text, picture_link;
 
     public Long getId() {
         return id;
@@ -44,10 +44,19 @@ public class Films {
         this.full_text = full_text;
     }
 
-    public Films(String title, String rating, String full_text) {
+    public Films(String title, String rating, String full_text, String picture_link) {
         this.title = title;
         this.rating = rating;
         this.full_text = full_text;
+        this.picture_link = picture_link;
+    }
+
+    public String getPicture_link() {
+        return picture_link;
+    }
+
+    public void setPicture_link(String picture_link) {
+        this.picture_link = picture_link;
     }
 
     public Films() {

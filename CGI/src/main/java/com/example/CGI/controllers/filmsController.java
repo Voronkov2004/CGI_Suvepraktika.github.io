@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,10 +31,16 @@ public class filmsController {
     }
 
     @PostMapping("/add")
-    public String filmPostAdd(@RequestParam String title, @RequestParam String full_text, @RequestParam String rating, Model model){
-        Films films = new Films(title, full_text, rating);
+    public String filmPostAdd(@RequestParam String title, @RequestParam String full_text, @RequestParam String rating, @RequestParam String picture_link, Model model){
+        Films films = new Films(title, full_text, rating, picture_link);
         filmsRepository.save(films);
         return "redirect:/";
+    }
+
+    @GetMapping("/{id}/payment")
+    public String ticketsForFilm(@PathVariable(value = "id") long id, Model model){
+        filmsRepository.findById(id);
+        return "seats";
     }
 
 }
