@@ -37,7 +37,7 @@ public class filmsController {
         return "redirect:/";
     }
 
-    @GetMapping("/{id}/payment")
+    @GetMapping("/{id}/seats")
     public String ticketsForFilm(@PathVariable(value = "id") long id, Model model){
         filmsRepository.findById(id);
         return "seats";
