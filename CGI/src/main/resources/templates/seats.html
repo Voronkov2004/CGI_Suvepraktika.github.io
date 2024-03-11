@@ -25,7 +25,8 @@
             background-color: #e03b16;
             width: 50px;
             height: 50px;
-            border-radius: 10px;
+            border-top-left-radius: 50%;
+            border-top-right-radius: 50%;
             border: 2px solid black;
         }
         .right-seats, .left-seats{
@@ -41,124 +42,126 @@
             transform: scale(1.2);
             cursor: pointer;
         }
-        .seat.selected{
+        .selected{
             background-color: #2879b8;
         }
         .seat.occupied {
             background-color: #fff;
         }
-        ::selection {
-            background: transparent;
-            color: inherit;
+        .seat_selector{
+            font-weight: bold;
+            font-size: 50px;
         }
-        ::-moz-selection {
-            background: transparent;
-            color: inherit;
+
+        .container.payment_form{
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            align-items: center;
         }
+
     </style>
 </head>
 <body>
 <header th:insert="~{osad/header :: header}"></header>
-
 <div class="container mt-5 p-5">
-    <div id="screen"></div>
-    <div>Seats Selected: <span id="seatsSelected">0</span></div>
-    <div id="seats">
-        <div class="left-seats">
-            <div class="seats-1">
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-            </div>
+        <div id="screen"></div>
+        <div id="seats">
+            <div class="left-seats">
+                <div class="seats-1">
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                </div>
 
-            <div class="seats-2">
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
+                <div class="seats-2">
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
 
+                </div>
+                <div class="seats-3">
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                </div>
             </div>
-            <div class="seats-3">
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
+            <div class="right-seats">
+                <div class="seats-4">
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                </div>
+                <div class="seats-5">
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                </div>
+                <div class="seats-6">
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                    <div class="seat"></div>
+                </div>
             </div>
         </div>
-        <div class="right-seats">
-            <div class="seats-4">
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-            </div>
-            <div class="seats-5">
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-            </div>
-            <div class="seats-6">
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-                <div class="seat"></div>
-            </div>
-        </div>
+    </div>
+    <div class="container payment_form">
+        <div class="seat_selector">Seats Selected: <span id="seatsSelected">0</span></div>
+        <div class="seat_selector">Your total is: <span id="total">0</span>€</div>
+        <button class="btn btn-success" style="height: 50px; width: 100px">Payment</button>
     </div>
 </div>
 
 <div th:insert="~{osad/footer :: footer}"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const container = document.querySelector('.container');
-
-        const updateSelectedCount = () => {
-            const selectedSeats = container.querySelectorAll('.seat.selected:not(.occupied)');
-            const selectedSeatsCount = selectedSeats.length;
-            document.getElementById('seatsSelected').textContent = selectedSeatsCount;
-        };
-
-        container.addEventListener('click', (event) => {
-            if (event.target.classList.contains('seat') && !event.target.classList.contains('occupied')) {
-                event.target.classList.toggle('selected');
-                updateSelectedCount();
-            }
+        const seat = document.querySelectorAll('.seat');
+        const pricePerSeat = 10;
+        seat.forEach(function(seat) {
+            seat.addEventListener('click', function () {
+                    seat.classList.toggle('selected');
+                    const selectedSeatsCount = document.querySelectorAll('.seat.selected').length;
+                    const totalCost = selectedSeatsCount * pricePerSeat;
+                    document.getElementById('seatsSelected').textContent = selectedSeatsCount;
+                    document.getElementById('total').textContent = totalCost;
+            });
         });
-    });
-
 </script>
 </body>
 </html>
