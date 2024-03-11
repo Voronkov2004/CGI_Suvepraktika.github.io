@@ -144,7 +144,11 @@
     <div class="container payment_form">
         <div class="seat_selector">Seats Selected: <span id="seatsSelected">0</span></div>
         <div class="seat_selector">Your total is: <span id="total">0</span>€</div>
-        <button class="btn btn-success" style="height: 50px; width: 100px">Payment</button>
+
+        <form th:action="@{'/' + ${id} + '/seats'}" method="post">
+            <input type="hidden" name="chairs" id="chairsInput" value="0">
+            <button type="submit" class="btn btn-success">Payment</button>
+        </form>
     </div>
 </div>
 
@@ -158,6 +162,7 @@
                     seat.classList.toggle('selected');
                     const selectedSeatsCount = document.querySelectorAll('.seat.selected').length;
                     const totalCost = selectedSeatsCount * pricePerSeat;
+                    document.getElementById('chairsInput').value = selectedSeatsCount;
                     document.getElementById('seatsSelected').textContent = selectedSeatsCount;
                     document.getElementById('total').textContent = totalCost;
             });

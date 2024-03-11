@@ -2,6 +2,8 @@ package com.example.CGI.controllers;
 
 import com.example.CGI.models.Films;
 import com.example.CGI.repository.FilmsRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +43,19 @@ public class filmsController {
     public String ticketsForFilm(@PathVariable(value = "id") long id, Model model){
         filmsRepository.findById(id);
         return "seats";
+    }
+
+    @PostMapping("/{id}/seats")
+    public String istuKohad(@PathVariable(value = "id") long id, @RequestParam("chairs") int chairs, HttpSession session){
+        session.setAttribute("chairs", chairs);
+        return "redirect:/{id}/seats/payment";
+    }
+
+    @GetMapping("/{id}/seats/payment")
+    public String payment(@PathVariable(value = "id") long id, HttpSession session, Model model){
+        Integer chairs = (Integer) session.getAttribute("chairs");
+        model.addAttribute("chairs", chairs);
+        return "payment";
     }
 
 }
