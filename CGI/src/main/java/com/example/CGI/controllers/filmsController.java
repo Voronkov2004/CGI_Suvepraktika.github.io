@@ -58,4 +58,10 @@ public class filmsController {
         return "payment";
     }
 
+    @GetMapping("/{id}/sessions")
+    public String showSessions(@PathVariable(value = "id") long id, Model model){
+        filmsRepository.findById(id);
+        return "sessions";
+    }
+
 }
