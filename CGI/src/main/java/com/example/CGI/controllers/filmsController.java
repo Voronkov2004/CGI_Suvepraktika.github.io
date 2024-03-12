@@ -2,7 +2,6 @@ package com.example.CGI.controllers;
 
 import com.example.CGI.models.Films;
 import com.example.CGI.repository.FilmsRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
