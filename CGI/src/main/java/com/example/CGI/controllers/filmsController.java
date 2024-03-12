@@ -33,8 +33,8 @@ public class filmsController {
     }
 
     @PostMapping("/add")
-    public String filmPostAdd(@RequestParam String title, @RequestParam String full_text, @RequestParam String rating, @RequestParam String picture_link, Model model){
-        Films films = new Films(title, full_text, rating, picture_link);
+    public String filmPostAdd(@RequestParam String title, @RequestParam String full_text, @RequestParam String rating, @RequestParam String picture_link, @RequestParam String genre, Model model){
+        Films films = new Films(title, full_text, rating, picture_link, genre);
         filmsRepository.save(films);
         return "redirect:/";
     }

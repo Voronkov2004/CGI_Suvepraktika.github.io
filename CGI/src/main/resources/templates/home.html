@@ -24,11 +24,37 @@
             color: black;
         }
 
+        .nav-item{
+            cursor: pointer;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .nav-item:hover{
+            transform: scale(1.2);
+        }
+
+        .hide{
+            opacity: 1;
+            animation-name: a1;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes a1 {
+            to{
+                opacity: 0;
+                min-height: 0;
+                min-width: 0;
+                padding: 0;
+                margin: 0;
+                border: 0;
+            }
+        }
+
     </style>
 </head>
 <body>
     <header th:insert="~{osad/header :: header}"></header>
-    <div class="container"></div>
     <main>
         <section class="py-5 text-center container">
             <div class="row py-lg-5">
@@ -39,34 +65,71 @@
             </div>
         </section>
 
+        <div class="container">
+            <header class="d-flex justify-content-center py-3">
+                <ul class="nav nav-pills" style="align-items: center">
+                    <li>Filters films by category: </li>
+                    <li data-f="None" class="nav-item">None</li>
+                    <li data-f="Drama" class="nav-item">Drama</li>
+                    <li data-f="Comedy" class="nav-item">Comedy</li>
+                    <li data-f="Horror" class="nav-item">Horror</li>
+                    <li data-f="Action" class="nav-item">Action</li>
+                </ul>
+            </header>
+        </div>
+
         <div class="album py-5 bg-body-tertiary">
             <div class="container" >
 
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                    <div th:each="el : ${films}">
-                        <a th:href="@{'/{id}/seats'(id=${el.id})}">
-                            <div class="col">
-                                <div class="card shadow-sm">
-                                    <img th:src="@{${el.picture_link}}" alt="film image">
-                                    <div class="card-body">
-                                        <h3 th:text="${el.title}" class="card-text"/>
-                                        <p th:text="${el.full_text}" class="card-text"/>
-                                        <p th:text="${el.rating}"></p>
+                    <div th:each="el : ${films}" class="col">
+                        <div class="films_container container" th:classappend="${el.genre}">
+                            <a th:href="@{'/{id}/seats'(id=${el.id})}">
+                                <div class="col">
+                                    <div class="card shadow-sm">
+                                        <img th:src="@{${el.picture_link}}" alt="film image">
+                                        <div class="card-body">
+                                            <h3 th:text="${el.title}" class="card-text"/>
+                                            <p th:text="${el.full_text}" class="card-text"/>
+                                            <p th:text="${el.rating}"></p>
+                                            <p th:text="${el.genre}"></p>
 
-
-
-
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </main>
     <div th:insert="~{osad/footer :: footer}"></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                let filterGenre = this.getAttribute('data-f');
+                const filmsContainers = document.querySelectorAll('.films_container');
+                filmsContainers.forEach(film => {
+                    film.classList.remove('hide');
+                    let filmGenre = film.className.split(' ').find(className => className !== 'films_container' && className !== 'container');
+                    if (filterGenre !== 'None' && filmGenre !== filterGenre) {
+                        film.classList.add('hide');
+                    }
+                });
+                const cols = document.querySelectorAll('.row > .col');
+                cols.forEach(col => {
+                    const filmContainer = col.querySelector('.films_container');
+                    if(filmContainer.classList.contains('hide')){
+                        col.style.display = 'none';
+                    } else {
+                        col.style.display = '';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
