@@ -8,9 +8,12 @@
         .sessions{
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: end;
+            max-width: 500px;
         }
         .session{
+            display: inline-flex;
+            flex-direction: row;
             border-radius: 10px;
             background-color: aliceblue;
             height: 200px;
@@ -23,7 +26,9 @@
 <header th:insert="~{osad/header :: header}"></header>
 <div class="container sessions">
     <div class="session">
+        <img th:src="${picture}" style="height: 100%"/>
         <h3 th:text="${title}"></h3>
+        <p>10:00</p>
 
     </div>
     <div class="session">

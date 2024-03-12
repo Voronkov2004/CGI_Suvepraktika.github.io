@@ -61,6 +61,9 @@ public class filmsController {
     @GetMapping("/{id}/sessions")
     public String showSessions(@PathVariable(value = "id") long id, Model model){
         filmsRepository.findById(id);
+        Films film = filmsRepository.findById(id).get();
+        model.addAttribute("title", film.getTitle());
+        model.addAttribute("picture", film.getPicture_link());
         return "sessions";
     }
 
