@@ -84,7 +84,7 @@
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                     <div th:each="el : ${films}" class="col">
                         <div class="films_container container" th:classappend="${el.genre}">
-                            <a th:href="@{'/{id}/sessions'(id=${el.id})}">
+                            <a th:href="@{'/{id}/seats'(id=${el.id})}">
                                 <div class="col">
                                     <div class="card shadow-sm">
                                         <img th:src="@{${el.picture_link}}" alt="film image">
