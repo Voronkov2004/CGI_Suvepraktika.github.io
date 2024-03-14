@@ -11,8 +11,9 @@
         }
         #seats{
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 100px;
+            grid-template-columns: repeat(8, 1fr);
+
+            gap: 20px 20px;
             justify-content: center;
             align-items: center;
             max-width: 600px;
@@ -35,11 +36,7 @@
             border-top-right-radius: 50%;
             border: 2px solid black;
         }
-        .right-seats, .left-seats{
-            display: grid;
-            grid-template-columns: repeat(4, 50px);
-            gap: 20px 20px;
-        }
+
         .seat:not(:first-child) {
             margin-top: 20px;
         }
@@ -74,7 +71,6 @@
         <div id="screen"></div>
     <div class="container" id="for_seats">
         <div id="seats">
-            <div class="left-seats">
                 <div class="seats-1">
                     <div class="seat"></div>
                     <div class="seat"></div>
@@ -122,8 +118,7 @@
                     <div class="seat"></div>
                     <div class="seat"></div>
                 </div>
-            </div>
-            <div class="right-seats">
+
                 <div class="seats-5">
                     <div class="seat"></div>
                     <div class="seat"></div>
@@ -169,7 +164,6 @@
                     <div class="seat"></div>
                     <div class="seat"></div>
                 </div>
-            </div>
         </div>
     </div>
     </div>
@@ -187,10 +181,9 @@
 <div th:insert="~{osad/footer :: footer}"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
-
     document.addEventListener('DOMContentLoaded', function() {
         const seats = document.querySelectorAll('.seat');
-        const numberOfSeatsToOccupy = 10;
+        const numberOfSeatsToOccupy = 15;
         function occupyRandomSeats(seats, count) {
             let occupiedSeats = 0;
             while (occupiedSeats < count) {
@@ -218,36 +211,47 @@
         });
     });
     document.addEventListener('DOMContentLoaded', function() {
-        var rows = document.querySelectorAll('.left-seats, .right-seats');
-        var numberOfRows = rows.length;
-        var seatsPerRow = rows[0].querySelectorAll('.seat').length;
-        var middleSeatIndex = Math.floor(seatsPerRow / 2);
-        var numberOfSeats = 3;
-        function findBestSeatsAndSelectThem() {
-            for (let r = 0; r < numberOfRows / 2; r++) {
-                var upperRow = rows[middleSeatIndex - r - 1];
-                var lowerRow = rows[middleSeatIndex + r];
-                for (const row of [upperRow, lowerRow]) {
-                    if (!row) continue;
-                    for (let s = 0; s < seatsPerRow; s++) {
-                        var seats = row.querySelectorAll('.seat:not(.occupied)');
-                        var seatIndex = middleSeatIndex - Math.floor(numberOfSeats / 2) + s;
-                        var selectedSeats = [];
-                        for (let i = seatIndex; i < seatIndex + numberOfSeats; i++) {
-                            var seat = seats[i];
-                            if (!seat || seat.classList.contains('occupied')) break;
-                            selectedSeats.push(seat);
-                        }
-                        if (selectedSeats.length === numberOfSeats) {
-                            selectedSeats.forEach(seat => seat.classList.add('selected'));
-                            return;
-                        }
+        const seatsPerRow = 9;
+        const numberOfRows = 8;
+        const middleRow = Math.ceil(numberOfRows / 2);
+        const middleSeatIndex = Math.ceil(seatsPerRow / 2);
+
+        function clearSelectedSeats() {
+            document.querySelectorAll('.seat.selected').forEach(function(seat) {
+                seat.classList.remove('selected');
+            });
+        }
+        function findBestSeatsAndSelectThem(numberOfSeats) {
+            let startSeat = middleSeatIndex - Math.ceil(numberOfSeats / 2);
+            for (let seatOffset = 0; seatOffset < middleSeatIndex; seatOffset++) {
+                let currentSeat = startSeat + seatOffset;
+                if (currentSeat < 0 || currentSeat >= seatsPerRow) continue;
+                let startRow = middleRow - Math.ceil(numberOfSeats / 2);
+                let endRow = startRow + numberOfSeats;
+                let seatsAvailable = true;
+                for (let row = startRow; row < endRow; row++) {
+                    if (row < 0 || row >= numberOfRows || document.querySelector('.seats-' + (row + 1) + ' .seat:nth-child(' + (currentSeat + 1) + ')').classList.contains('occupied')) {
+                        seatsAvailable = false;
+                        break;
                     }
+                }
+                if (seatsAvailable) {
+                    clearSelectedSeats();
+                    for (let row = startRow; row < endRow; row++) {
+                        document.querySelector('.seats-' + (row + 1) + ' .seat:nth-child(' + (currentSeat + 1) + ')').classList.add('selected');
+                    }
+                    updateSelectedCountAndTotal();
+                    return;
                 }
             }
         }
-
-        findBestSeatsAndSelectThem();
+        function updateSelectedCountAndTotal() {
+            var numberOfSelectedSeats = document.querySelectorAll('.seat.selected').length;
+            const totalCost = numberOfSelectedSeats * pricePerSeat;
+            document.getElementById('seatsSelected').textContent = selectedSeatsCount;
+            document.getElementById('total').textContent = totalCost + '€';
+        }
+        findBestSeatsAndSelectThem(2);
     });
 </script>
 </body>
