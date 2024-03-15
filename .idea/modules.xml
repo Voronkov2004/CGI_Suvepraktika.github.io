@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CGI/CGI.iml" filepath="$PROJECT_DIR$/CGI/CGI.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/CGI_Suvepraktika.github.io.iml" filepath="$PROJECT_DIR$/.idea/CGI_Suvepraktika.github.io.iml" />
     </modules>
   </component>

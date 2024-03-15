@@ -10,7 +10,7 @@ public class Films {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String title, rating, full_text, picture_link, genre;
+    private String title, rating, full_text, picture_link, genre, language, format, age_rating;
 
     public Long getId() {
         return id;
@@ -52,12 +52,39 @@ public class Films {
         this.genre = genre;
     }
 
-    public Films(String title, String rating, String full_text, String picture_link, String genre) {
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
+    public String getAge_rating() {
+        return age_rating;
+    }
+
+    public void setAge_rating(String age_rating) {
+        this.age_rating = age_rating;
+    }
+
+    public Films(String title, String rating, String full_text, String picture_link, String genre, String language, String format, String age_rating) {
         this.title = title;
         this.rating = rating;
         this.full_text = full_text;
         this.picture_link = picture_link;
         this.genre = genre;
+        this.language = language;
+        this.format = format;
+        this.age_rating = age_rating;
     }
 
     public String getPicture_link() {

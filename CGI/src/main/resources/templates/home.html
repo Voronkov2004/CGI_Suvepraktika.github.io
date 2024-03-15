@@ -5,6 +5,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style>
+
         .card {
             height: 850px;
             display: flex;
@@ -51,6 +52,25 @@
             }
         }
 
+        #dropdowns {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .dropdown.container {
+            margin: 5px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .dropdown-menu {
+            width: auto;
+            max-width: 100%;
+        }
+
+
     </style>
 </head>
 <body>
@@ -64,19 +84,21 @@
                 </div>
             </div>
         </section>
+        <div id="dropdowns">
+            <div class="dropdown container">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Filter by category
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item" data-f="None">None</li>
+                    <li class="dropdown-item" data-f="Drama">Drama</li>
+                    <li class="dropdown-item" data-f="Comedy">Comedy</li>
+                    <li class="dropdown-item" data-f="Horror">Horror</li>
+                    <li class="dropdown-item" data-f="Action">Action</li>
 
-        <div class="container">
-            <header class="d-flex justify-content-center py-3">
-                <ul class="nav nav-pills" style="align-items: center">
-                    <li>Filters films by category: </li>
-                    <li data-f="None" class="nav-item">None</li>
-                    <li data-f="Drama" class="nav-item">Drama</li>
-                    <li data-f="Comedy" class="nav-item">Comedy</li>
-                    <li data-f="Horror" class="nav-item">Horror</li>
-                    <li data-f="Action" class="nav-item">Action</li>
                 </ul>
-            </header>
-        </div>
+            </div>
+
 
         <div class="album py-5 bg-body-tertiary">
             <div class="container" >
@@ -84,7 +106,7 @@
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                     <div th:each="el : ${films}" class="col">
                         <div class="films_container container" th:classappend="${el.genre}">
-                            <a th:href="@{'/{id}/seats'(id=${el.id})}">
+                            <a th:href="@{'/{id}/sessions'(id=${el.id})}">
                                 <div class="col">
                                     <div class="card shadow-sm">
                                         <img th:src="@{${el.picture_link}}" alt="film image">
@@ -93,6 +115,8 @@
                                             <p th:text="${el.full_text}" class="card-text"/>
                                             <p th:text="${el.rating}"></p>
                                             <p th:text="${el.genre}"></p>
+                                            <p th:text="${el.age_rating}"></p>
+                                            <p th:text="${el.format}"></p>
 
                                         </div>
                                     </div>
@@ -108,7 +132,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
 
-        document.querySelectorAll('.nav-item').forEach(item => {
+        document.querySelectorAll('.dropdown-item').forEach(item => {
             item.addEventListener('click', function() {
                 let filterGenre = this.getAttribute('data-f');
                 const filmsContainers = document.querySelectorAll('.films_container');
